@@ -20,19 +20,26 @@ const start = () => {
     bot.on('message', async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
+
+        let pass = await bot.getChatMember(`@TvoeKino`, chatId)
+
+        if (pass.status === `left` || pass.status === `creator`) {
+            await bot.sendMessage(chatId, `sub`);
+        } else if (pass.status === `member`) {
+            await bot.sendMessage(chatId, `good`)
+        }
     
         if (text === '/start') {
             await bot.sendMessage(chatId, `Здравствуйте, ${msg.from.first_name}, введите ваш код по команде /kod!`);
             return bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/420/301/420301d9-363c-31ed-926a-23e4e05759d9/4.webp');
         }
-
         if (text === '/kod') {
             return bot.sendMessage(chatId, "Введите Ваш код!");
         }
 
         if (text === '1234') {
-            await bot.sendMessage(chatId, "Ваш фильм называется: вадим не отвечал мне ебаный час и за это время я нахуй бота сломал поэтому пишк его заново!!!");
-            return bot.sendPhoto(chatId, 'https://sun9-20.userapi.com/impg/3-mCe99nQ7ALuoof5s0OKHZu5PV5pQyUqKJTNA/mseFFC-HkbM.jpg?size=1600x719&quality=95&sign=5ec6a50a8b4bb0f91aff0239bf6866a1&type=album');
+            await bot.sendMessage(chatId, "Ваш фильм называется: Остров проклятых(2010г)");
+            return bot.sendPhoto(chatId, 'https://kinohod.ru/o/12/e9/12e9fad6-e618-11eb-a401-de9ad328d8a2.jpg');
         }
 
         return bot.sendMessage(chatId, 'Извините я вас не понял, пожалуйста введите верный код фильма.', )
